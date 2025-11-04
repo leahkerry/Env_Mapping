@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assignment 4 - Shader</title>
+  <link rel="stylesheet" type="text/css" href="src/styles/style.css" />
+</head>
+
+<body>
+  <header class="header">
+    <h1>Assignment 4 - Shader</h1>
+  </header>
+
+  <div class="main">
+    <aside class="panel">
+      <section class="box">
+        <h2 style="margin-top: 0">Environment</h2>
+
+        <div class="toolbar">
+          <div class="file-block">
+            <label class="label">Choose a PPM file:</label>
+            <input id="ppmInput" class="input" type="file" accept=".ppm" />
+          </div>
+        </div>
+
+        <p id="status"></p>
+      </section>
+
+      <section class="box">
+        <h2 style="margin-top: 0">Object Model</h2>
+
+        <div class="field">
+          <label for="objectRotateXSlider">rotateX</label>
+          <input id="objectRotateXSlider" type="range" min="-359" max="359" step="1" value="0" />
+          <output id="objectRotateXVal" class="out"></output>
+        </div>
+        <div class="field">
+          <label for="objectRotateYSlider">rotateY</label>
+          <input id="objectRotateYSlider" type="range" min="-359" max="359" step="1" value="0" />
+          <output id="objectRotateYVal" class="out"></output>
+        </div>
+        <div class="field">
+          <label for="objectRotateZSlider">rotateZ</label>
+          <input id="objectRotateZSlider" type="range" min="-359" max="359" step="1" value="0" />
+          <output id="objectRotateZVal" class="out"></output>
+        </div>
+
+        <div class="field">
+          <label for="objectScaleSlider">scale</label>
+          <input id="objectScaleSlider" type="range" min="0.8" max="3" step="0.01" value="1" />
+          <output id="objectScaleVal" class="out"></output>
+        </div>
+
+      </section>
+
+      <section class="box">
+        <h2 style="margin-top: 0">World Model</h2>
+
+        <div class="field">
+          <label for="rotateSlider">rotate</label>
+          <input id="rotateSlider" type="range" min="-359" max="359" step="1" value="0" />
+          <output id="rotateVal" class="out"></output>
+        </div>
+
+        <div class="field">
+          <label for="scaleSlider">scale</label>
+          <input id="scaleSlider" type="range" min="0.8" max="3" step="0.01" value="1" />
+          <output id="scaleVal" class="out"></output>
+        </div>
+
+      </section>
+      <section class="box">
+        <h2 style="margin-top: 0">Object</h2>
+
+        <div class="toolbar">
+          <div class="file-block">
+            <label class="label">Choose a PLY file:</label>
+            <input id="plyInput" class="input" type="file" accept=".ply" />
+          </div>
+          <div class="file-block">
+            <label class="label">Choose a PPM file:</label>
+            <input id="objectPPMInput" class="input" type="file" accept=".ppm" />
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="textureBlend">Blend</label>
+          <input id="textureBlend" type="range" min="0" max="1" step="0.01" value="0" />
+          <output id="textureBlendVal" class="out"></output>
+        </div>
+
+        <div class="checks">
+          <label>
+            <input id="diffuseCheckbox" type="checkbox" />
+            Diffuse
+          </label>
+        </div>
+      </section>
+      <section class="box">
+        <h2 style="margin-top: 0">Shader</h2>
+
+        <div class="toolbar">
+          <button id="reloadShadersBtn" class="button">Reload Shaders</button>
+        </div>
+
+        <p id="status"></p>
+      </section>
+    </aside>
+
+    <!-- right: gl canvas -->
+    <section class="content">
+      <div class="canvas-box">
+        <canvas id="glcanvas"></canvas>
+      </div>
+    </section>
+  </div>
+
+  <!-- import: glMatrix and our code -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gl-matrix/2.8.1/gl-matrix-min.js"></script>
+  <script type="module" src="main.js"></script>
+</body>
+
+</html>
