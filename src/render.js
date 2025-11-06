@@ -229,15 +229,36 @@ export class WebGLRenderer {
 
     // model matrix, view matrix and projection matrix are provided
     const modelMatrix = this.objectMatrix();
-    const viewMatrix = matrices.modelView;
+    const modelViewMatrix = matrices.modelView;
     const projectionMatrix = matrices.projection;
+
+    // OLD get texture color of environment and object
+    // vec4 texColorWorld = texture2D(uTexture, vTexCoord);
+    // vec4 texColorObj = texture2D(uObjectTexture, vTexCoord);
+
+    const invProjectionMatrix = mat4.create();
+    mat4.invert(invProjectionMatrix, projectionMatrix);
+    const invModelViewMatrix = mat4.create();
+    mat4.invert(invModelViewMatrix, modelViewMatrix);
+    const invModelMatrix = mat4.create();
+    mat4.invert(invModelMatrix, modelMatrix);
+    const invNormalMatrix = mat4.create();
+    mat4.invert(invNormalMatrix, matrices.normal);
 
     // TODO: calculate the rest variables here
     // NOTE: since we are using webgl 1.0, shaders cannot call inverse or transpose functions.
     program.setMatrix4("u_projectionMatrix", matrices.projection); // this is computed in camera.js
     program.setMatrix4("u_modelViewMatrix", matrices.modelView); // this is computed in camera.js
+    program.setMatrix4("u_modelMatrix", modelMatrix);
     program.setMatrix3("u_normalMatrix", matrices.normal); // this is computed in camera.js
+
+    program.setMatrix4("u_invProjectionMatrix", invProjectionMatrix); // this is computed in camera.js
+    program.setMatrix4("u_invModelViewMatrix", invModelViewMatrix); // this is computed in camera.js
+    program.setMatrix4("u_invModelMatrix", invModelMatrix);
+    program.setMatrix3("u_invNormalMatrix", invNormalMatrix); // this is computed in camera.js
     // TODO: set uniforms
+    // program.setMatrix4("viewMatrix", viewMatrix);
+    // program.setMatrix4("projectionMatrix", projectionMatrix);
 
     // fixed light direction
     program.setVector3("u_lightDirWorld", [0.0, 0.0, -1.0]);
