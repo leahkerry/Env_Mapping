@@ -62,6 +62,7 @@ export class WebGLRenderer {
   /************** File Reading Helper Functions ***************/
 
   async loadShaders(name) {
+    console.log(`program name: ${name}`)
     const vsText = await fetch(`./shaders/${name}.vert`).then((r) => r.text());
     const fsText = await fetch(`./shaders/${name}.frag`).then((r) => r.text());
     this.programs[name] = new ShaderProgram(this.gl, vsText, fsText);
@@ -210,7 +211,9 @@ export class WebGLRenderer {
 
   renderInner(matrices) {
     // TODO: use the inner shader program
-
+    const gl = this.gl;
+    const program = this.programs.inner;
+    program.use();
     // set textures
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, this.textures["environment"]);
@@ -231,7 +234,9 @@ export class WebGLRenderer {
 
     // TODO: calculate the rest variables here
     // NOTE: since we are using webgl 1.0, shaders cannot call inverse or transpose functions.
-
+    program.setMatrix4("u_projectionMatrix", matrices.projection); // this is computed in camera.js
+    program.setMatrix4("u_modelViewMatrix", matrices.modelView); // this is computed in camera.js
+    program.setMatrix3("u_normalMatrix", matrices.normal); // this is computed in camera.js
     // TODO: set uniforms
 
     // fixed light direction
@@ -239,6 +244,8 @@ export class WebGLRenderer {
     // given controls from UI
     program.setFloat("u_blend", this.controls.blend ? parseFloat(this.controls.blend.value) : 0.0);
     program.setInteger("u_diffuse", this.controls.diffuse ? 1 : 0);
+
+    program.setVector3("u_eye")
     
     // bind VAO
     this.innerMesh.bindForFillRender(gl, program);
@@ -256,6 +263,9 @@ export class WebGLRenderer {
     gl.bindTexture(gl.TEXTURE_2D, this.textures["environment"]);
     program.setInteger("uTexture", 0);
     // TODO: set uniforms
+    program.setMatrix4("u_projectionMatrix", matrices.projection); // this is computed in camera.js
+    program.setMatrix4("u_modelViewMatrix", matrices.modelView); // this is computed in camera.js
+    program.setMatrix3("u_normalMatrix", matrices.normal); // this is computed in camera.js
 
     // bind VAO
     this.outerMesh.bindForFillRender(gl, program);

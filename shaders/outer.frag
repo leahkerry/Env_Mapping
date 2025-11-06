@@ -8,6 +8,7 @@ const float PI = 3.141592653589793;
 
 // TODO: implement textureLocation function
 vec2 textureLocation(vec3 dirWorld) {
+    
     return vec2(0.0, 0.0);
 }
 void main() {
