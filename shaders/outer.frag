@@ -2,13 +2,13 @@ precision highp float;
 
 uniform sampler2D uTexture;
 
-const float radius = 4.0;
+const float radius = 8.0;
 
 varying vec3 v_posEye;
 
 const float PI = 3.141592653589793;
 
-// TODO: implement textureLocation function
+
 vec2 textureLocation(vec3 dirWorld) {
     float Px = dirWorld[0];
     float Py = dirWorld[1];
