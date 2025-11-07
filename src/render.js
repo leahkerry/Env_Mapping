@@ -257,8 +257,8 @@ export class WebGLRenderer {
     program.setMatrix4("u_invModelMatrix", invModelMatrix);
     program.setMatrix3("u_invNormalMatrix", invNormalMatrix); // this is computed in camera.js
     // TODO: set uniforms
-    // program.setMatrix4("viewMatrix", viewMatrix);
-    // program.setMatrix4("projectionMatrix", projectionMatrix);
+    const cameraPosition = (0.0, 0.0, this.camera.zoom) * 
+    program.setVector3("u_cameraPosition", viewMatrix);
 
     // fixed light direction
     program.setVector3("u_lightDirWorld", [0.0, 0.0, -1.0]);

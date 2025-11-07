@@ -14,8 +14,17 @@ vec2 textureLocation(vec3 dirWorld) {
     float Py = dirWorld[1];
     float Pz = dirWorld[2];
 
-    float u = atan(Pz,Px) / (2.0 * PI);
-    float v = asin(-1.0 * Py / radius) / PI + 0.5;
+    float theta = atan(-Pz,Px);
+    float u = 0.0;
+
+    if (theta < 0.0) {
+        u = -theta / (2.0 * PI);
+    } else {
+        u = 1.0 - (theta / (2.0 * PI));
+    }
+
+    // float u = atan(Pz,Px) / (2.0 * PI);
+    float v = asin(-Py / radius) / PI + 0.5;
     
     return vec2(u, v);
 }
