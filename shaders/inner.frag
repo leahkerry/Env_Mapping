@@ -24,6 +24,7 @@ const float PI = 3.141592653589793;
 varying vec3 v_normalEye;
 varying vec3 v_posEye; 
 
+varying vec3 viewVector;
 varying vec3 reflectedVector;
 
 vec2 textureLocation(vec3 dirWorld) {
@@ -31,16 +32,17 @@ vec2 textureLocation(vec3 dirWorld) {
     float Py = dirWorld[1];
     float Pz = dirWorld[2];
 
+    // u, v formula from the slides:
     float theta = atan(Pz,Px);
     float u = 0.0;
-
+    
     if (theta < 0.0) {
         u = -theta / (2.0 * PI);
     } else {
         u = 1.0 - (theta / (2.0 * PI));
     }
-
     // float u = atan(Pz,Px) / (2.0 * PI);
+
     float v = asin(-1.0 * Py / radius) / PI + 0.5;
     
     return vec2(u, v);
@@ -52,14 +54,14 @@ void main() {
     float diffuse = 1.0;
     
     // Reflected texture location
-    vec2 reflected_texture = textureLocation(reflectedVector);
+    vec2 refTexCoord = textureLocation(reflectedVector);
     // get texture color of reflected environment
-    vec4 texColorWorld = texture2D(uTexture, reflected_texture);
+    vec4 texColorWorld = texture2D(uTexture, refTexCoord);
 
     // Object texture location
-    vec2 vTexCoord = textureLocation(v_posEye);
+    vec2 objTexCoord = textureLocation(viewVector);
     // get texture color of object
-    vec4 texColorObj = texture2D(uObjectTexture, vTexCoord);
+    vec4 texColorObj = texture2D(uObjectTexture, objTexCoord);
 
     // blend
     vec4 texColor = u_blend * texColorObj + (1.0 - u_blend) * texColorWorld;

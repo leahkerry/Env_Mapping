@@ -14,6 +14,7 @@ vec2 textureLocation(vec3 dirWorld) {
     float Py = dirWorld[1];
     float Pz = dirWorld[2];
 
+    // u, v formula from the slides:
     float theta = atan(-Pz,Px);
     float u = 0.0;
 
