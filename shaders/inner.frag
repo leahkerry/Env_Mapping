@@ -17,7 +17,7 @@ uniform vec3 u_lightDirWorld;
 uniform float u_blend;
 uniform int u_diffuse;
 
-const float radius = 8.0;
+// const float radius = 8.0;
 
 const float PI = 3.141592653589793;
 
@@ -42,7 +42,8 @@ vec2 textureLocation(vec3 dirWorld) {
         u = 1.0 - (theta / (2.0 * PI));
     }
     // float u = atan(Pz,Px) / (2.0 * PI);
-
+    float radius = length(dirWorld);
+    // float radius = 10.0;
     float v = asin(-1.0 * Py / radius) / PI + 0.5;
     
     return vec2(u, v);
@@ -52,14 +53,15 @@ vec2 textureLocation(vec3 dirWorld) {
     // + (1-blend)*diffuse + specular
 void main() {
     float diffuse = 1.0;
-    
+
     // Reflected texture location
     vec2 refTexCoord = textureLocation(reflectedVector);
     // get texture color of reflected environment
     vec4 texColorWorld = texture2D(uTexture, refTexCoord);
 
     // Object texture location
-    vec2 objTexCoord = textureLocation(viewVector);
+    
+    vec2 objTexCoord = textureLocation(v_posEye);
     // get texture color of object
     vec4 texColorObj = texture2D(uObjectTexture, objTexCoord);
 
