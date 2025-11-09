@@ -33,17 +33,17 @@ void main() {
     vec3 normal = normalize(v_normalEye);
 
     // Get world position of object
-    vec3 worldPosition = vec3(u_modelMatrix * vec4(a_position, 1.0));
+    vec3 worldPosition = vec3(u_invModelViewMatrix * u_modelMatrix * vec4(a_position, 1.0));
     v_posEye = a_position;
     // Camera position in world space - Object position in world space = view vector
-    viewVector = normalize(worldPosition - v_posEye);
-
+    viewVector = normalize(v_posEye - worldPosition);
+    // viewNormal = normalize()
     // Get reflected vector
-    vec3 worldNormal = vec3(u_modelMatrix * vec4(normal, 1.0));
-    reflectedVector = reflect(viewVector, worldNormal);
+    vec3 worldNormal = vec3(u_modelMatrix * vec4(a_normal, 1.0));
+    reflectedVector = reflect(viewVector, a_normal);
     
     // Convert reflected vector back to object space?
-    reflectedVector = vec3(u_invModelMatrix * vec4(reflectedVector, 0.0));
+    reflectedVector = vec3(vec4(reflectedVector, 0.0));
     // reflectedVector = normalize(reflectedVector);
 
     // Set gl_position
