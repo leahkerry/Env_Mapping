@@ -1,13 +1,10 @@
 precision highp float;
 
 uniform sampler2D uTexture;
-
-const float radius = 8.0;
-
-varying vec3 v_posEye;
-
+// Previously, radius = 8.0
+const float radius = 4.0; 
 const float PI = 3.141592653589793;
-
+varying vec3 v_posEye;
 
 vec2 textureLocation(vec3 dirWorld) {
     float Px = dirWorld[0];
@@ -15,7 +12,7 @@ vec2 textureLocation(vec3 dirWorld) {
     float Pz = dirWorld[2];
 
     // u, v formula from the slides:
-    float theta = atan(-Pz,Px);
+    float theta = atan(Pz,-Px);
     float u = 0.0;
 
     if (theta < 0.0) {
@@ -24,9 +21,7 @@ vec2 textureLocation(vec3 dirWorld) {
         u = 1.0 - (theta / (2.0 * PI));
     }
 
-    // float u = atan(Pz,Px) / (2.0 * PI);
-    float v = asin(-Py / radius) / PI + 0.5;
-    
+    float v = -asin(Py / radius) / PI + 0.5;    
     return vec2(u, v);
 }
 void main() {

@@ -24,17 +24,19 @@ void main() {
     // Get eye point and normal in world space
     // v_posEye = vec3(u_modelViewMatrix * vec4(a_position, 1.0));
     // v_posEye = vec3(a_position[0] + u_modelViewMatrix[3][0], a_position[1] + u_modelViewMatrix[3][1], a_position[2] + u_modelViewMatrix[3][2]);
-    v_normalEye = u_normalMatrix * a_normal;
-
     
+    // v_normalEye = u_normalMatrix * a_normal;
+    vec3 a_normalCam = u_normalMatrix * a_normal;
+    v_normalEye = normalize(a_normalCam);    
 
     // Normalize eye point and normal
-    vec3 eye = normalize(v_posEye);
-    vec3 normal = normalize(v_normalEye);
+    // vec3 eye = normalize(v_posEye);
+    // vec3 normal = normalize(v_normalEye);
 
     // Get world position of object
     vec3 worldPosition = vec3(u_invModelViewMatrix * u_modelMatrix * vec4(a_position, 1.0));
     v_posEye = a_position;
+    // v_posEye = worldPosition.xyz;
     // Camera position in world space - Object position in world space = view vector
     viewVector = normalize(v_posEye - worldPosition);
     // viewNormal = normalize()
