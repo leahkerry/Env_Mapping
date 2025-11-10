@@ -49,7 +49,7 @@ void main() {
     float diffuse = 1.0;
 
     // Reflected texture location
-    vec2 refTexCoord = textureLocation(reflectedVector);
+    vec2 refTexCoord = textureLocation(normalize(reflectedVector));
     
     // get texture color of reflected environment
     vec4 texColorWorld = texture2D(uTexture, refTexCoord);

@@ -31,7 +31,7 @@ void main() {
 
     // Get reflected vector
     vec3 worldNormal = vec3(u_modelMatrix * vec4(a_normal, 0.0));
-    reflectedVector = normalize(reflect(viewVector, worldNormal));
+    reflectedVector = reflect(viewVector, worldNormal);
 
     // Set gl_position
     gl_Position = u_projectionMatrix * u_modelViewMatrix * u_modelMatrix * vec4(a_position, 1.0);
