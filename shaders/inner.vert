@@ -17,37 +17,24 @@ varying vec3 v_normalEye;
 varying vec3 viewVector;
 varying vec3 reflectedVector;
 
-void main() {
-    // v_normalEye = normalize(a_normal);
-    // v_posEye = a_position;
-    
+void main() {    
     // Get eye point and normal in world space
-    // v_posEye = vec3(u_modelViewMatrix * vec4(a_position, 1.0));
-    // v_posEye = vec3(a_position[0] + u_modelViewMatrix[3][0], a_position[1] + u_modelViewMatrix[3][1], a_position[2] + u_modelViewMatrix[3][2]);
-    
-    // v_normalEye = u_normalMatrix * a_normal;
     vec3 a_normalCam = u_normalMatrix * a_normal;
     v_normalEye = normalize(a_normalCam);    
 
-    // Normalize eye point and normal
-    // vec3 eye = normalize(v_posEye);
-    // vec3 normal = normalize(v_normalEye);
-
     // Get world position of object
     vec3 worldPosition = vec3(u_invModelViewMatrix * u_modelMatrix * vec4(a_position, 1.0));
-    v_posEye = a_position;
-    // v_posEye = worldPosition.xyz;
+    vec4 worldPos = u_modelMatrix * vec4(a_position, 1.0);
+    v_posEye = worldPos.xyz;
+
     // Camera position in world space - Object position in world space = view vector
     viewVector = normalize(v_posEye - worldPosition);
-    // viewNormal = normalize()
+
     // Get reflected vector
-    vec3 worldNormal = vec3(u_modelMatrix * vec4(a_normal, 1.0));
-    reflectedVector = reflect(viewVector, a_normal);
+    vec3 worldNormal = vec3(u_modelMatrix * vec4(a_normal, 0.0));
+    reflectedVector = normalize(reflect(viewVector, worldNormal)); // dependent on outer env --> stay in world space
     
-    // Convert reflected vector back to object space?
-    reflectedVector = vec3(vec4(reflectedVector, 0.0));
-    // reflectedVector = normalize(reflectedVector);
 
     // Set gl_position
-    gl_Position = u_projectionMatrix * u_modelViewMatrix * u_modelMatrix* vec4(a_position, 1.0);
+    gl_Position = u_projectionMatrix * u_modelViewMatrix * u_modelMatrix * vec4(a_position, 1.0);
 }

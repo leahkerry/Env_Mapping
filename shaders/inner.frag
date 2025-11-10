@@ -41,27 +41,22 @@ vec2 textureLocation(vec3 dirWorld) {
     } else {
         u = 1.0 - (theta / (2.0 * PI));
     }
-    // float u = atan(Pz,Px) / (2.0 * PI);
     float radius = length(dirWorld);
-    // float radius = 10.0;
     float v = -asin(1.0 * Py / radius) / PI + 0.5;
     
     return vec2(u, v);
 }
 
-// vec4 new_final_color = ambient + blend*texture_color
-    // + (1-blend)*diffuse + specular
-    
 void main() {
     float diffuse = 1.0;
 
     // Reflected texture location
     vec2 refTexCoord = textureLocation(reflectedVector);
+    
     // get texture color of reflected environment
     vec4 texColorWorld = texture2D(uTexture, refTexCoord);
 
     // Object texture location
-    
     vec2 objTexCoord = textureLocation(v_posEye);
     // get texture color of object
     vec4 texColorObj = texture2D(uObjectTexture, objTexCoord);
