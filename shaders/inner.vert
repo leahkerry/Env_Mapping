@@ -24,16 +24,14 @@ void main() {
 
     // Get world position of object
     vec3 worldPosition = vec3(u_invModelViewMatrix * u_modelMatrix * vec4(a_position, 1.0));
-    vec4 worldPos = u_modelMatrix * vec4(a_position, 1.0);
-    v_posEye = worldPos.xyz;
+    v_posEye = a_position;
 
     // Camera position in world space - Object position in world space = view vector
     viewVector = normalize(v_posEye - worldPosition);
 
     // Get reflected vector
     vec3 worldNormal = vec3(u_modelMatrix * vec4(a_normal, 0.0));
-    reflectedVector = normalize(reflect(viewVector, worldNormal)); // dependent on outer env --> stay in world space
-    
+    reflectedVector = normalize(reflect(viewVector, worldNormal));
 
     // Set gl_position
     gl_Position = u_projectionMatrix * u_modelViewMatrix * u_modelMatrix * vec4(a_position, 1.0);

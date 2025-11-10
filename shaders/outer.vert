@@ -13,6 +13,5 @@ varying vec3 v_posEye;
 void main() {
     v_normalEye = a_normal;
     v_posEye = a_position * radius;
-
     gl_Position = u_projectionMatrix * u_modelViewMatrix * vec4(v_posEye, 1.0);
 }

@@ -214,6 +214,7 @@ export class WebGLRenderer {
     const gl = this.gl;
     const program = this.programs.inner;
     program.use();
+
     // set textures
     gl.activeTexture(gl.TEXTURE0);
     gl.bindTexture(gl.TEXTURE_2D, this.textures["environment"]);
@@ -265,9 +266,7 @@ export class WebGLRenderer {
     // given controls from UI
     program.setFloat("u_blend", this.controls.blend ? parseFloat(this.controls.blend.value) : 0.0);
     program.setInteger("u_diffuse", this.controls.diffuse ? 1 : 0);
-
-    program.setVector3("u_eye")
-    
+        
     // bind VAO
     this.innerMesh.bindForFillRender(gl, program);
     // draw call

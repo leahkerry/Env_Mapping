@@ -28,6 +28,5 @@ void main() {
     vec3 worldPt = v_posEye;
     vec2 vTexCoord = textureLocation(worldPt);
     vec4 texelColor = texture2D(uTexture, vTexCoord);
-
     gl_FragColor = texelColor;
 }

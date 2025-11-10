@@ -17,8 +17,6 @@ uniform vec3 u_lightDirWorld;
 uniform float u_blend;
 uniform int u_diffuse;
 
-// const float radius = 8.0;
-
 const float PI = 3.141592653589793;
 
 varying vec3 v_normalEye;
@@ -57,7 +55,7 @@ void main() {
     vec4 texColorWorld = texture2D(uTexture, refTexCoord);
 
     // Object texture location
-    vec2 objTexCoord = textureLocation(v_posEye);
+    vec2 objTexCoord = textureLocation(normalize(v_posEye));
     // get texture color of object
     vec4 texColorObj = texture2D(uObjectTexture, objTexCoord);
 
