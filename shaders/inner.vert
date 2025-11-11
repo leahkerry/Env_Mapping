@@ -20,17 +20,17 @@ varying vec3 reflectedVector;
 void main() {    
     // Get eye point and normal in world space
     vec3 a_normalCam = u_normalMatrix * a_normal;
-    v_normalEye = normalize(a_normalCam);    
+    v_normalEye = normalize(a_normalCam);
 
     // Get world position of object
     vec3 worldPosition = vec3(u_invModelViewMatrix * u_modelMatrix * vec4(a_position, 1.0));
-    v_posEye = a_position;
+    v_posEye = normalize(a_position);
 
     // Camera position in world space - Object position in world space = view vector
     viewVector = normalize(v_posEye - worldPosition);
 
     // Get reflected vector
-    vec3 worldNormal = vec3(u_modelMatrix * vec4(a_normal, 0.0));
+    vec3 worldNormal = normalize(vec3(u_modelMatrix * vec4(a_normal, 0.0)));
     reflectedVector = reflect(viewVector, worldNormal);
 
     // Set gl_position

@@ -55,7 +55,7 @@ void main() {
     vec4 texColorWorld = texture2D(uTexture, refTexCoord);
 
     // Object texture location
-    vec2 objTexCoord = textureLocation(normalize(v_posEye));
+    vec2 objTexCoord = textureLocation(normalize(viewVector));
     // get texture color of object
     vec4 texColorObj = texture2D(uObjectTexture, objTexCoord);
 
